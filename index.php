@@ -66,6 +66,7 @@ class wechatCallbackapiTest
                     $contentStr = "你的链接有病毒吧！";
                     break;
                 case "text";
+               
 //                    $weatherurl = "http://api.map.baidu.com/telematics/v2/weather?location={$keyword}&ak=1a3cde429f38434f1811a75e1a90310c";
 //                    $apistr = file_get_contents($weatherurl);
 //                    $apiobj = simplexml_load_string($apistr);
@@ -75,7 +76,12 @@ class wechatCallbackapiTest
 //                    $windobj = $apiobj->results->result[0]->wind;//读取风力
 //                    $temobj = $apiobj->results->result[0]->temperature;//读取温度
 //                    $contentStr = "白蘑菇你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
-                    if($keyword == '老公'){
+                    if(preg_match("/^1[34578]{1}\d{9}$/",$keyword)){
+                        $res = file_get_contents('http://mobsec-dianhua.baidu.com/dianhua_api/open/location?tel='.$keyword);
+                        if(isset($res['responseHeader']['status']) && $res['responseHeader']['status'] == '200'){
+                            $contentStr = $res['response'][$keyword]['location'];
+                        }
+                    }elseif($keyword == '老公'){
                         $contentStr = "白蘑菇你好";
                     }elseif($keyword == '爸爸'){
                         $contentStr = "哎，乖儿子";
