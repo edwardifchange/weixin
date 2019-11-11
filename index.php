@@ -45,7 +45,7 @@ class wechatCallbackapiTest
             switch ($type) {
                 case "event";
                     if ($customrevent == "subscribe") {
-                        $contentStr = "感谢你的关注\n回复1查看联系方式\n回复2查看最新资讯\n回复3查看法律文书";
+                        $contentStr = "感谢你的关注\n你可以尝试着叫一声爸爸";
                     }
                     break;
                 case "image";
@@ -75,8 +75,10 @@ class wechatCallbackapiTest
 //                    $windobj = $apiobj->results->result[0]->wind;//读取风力
 //                    $temobj = $apiobj->results->result[0]->temperature;//读取温度
 //                    $contentStr = "白蘑菇你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
-                    if($keyword == '1'){
+                    if($keyword == '老公'){
                         $contentStr = "白蘑菇你好";
+                    }elseif($keyword == '爸爸'){
+                        $contentStr = "哎，乖儿子";
                     }else{
                         $contentStr = "儿子们，我是你们高爸爸！！！";
                     }
