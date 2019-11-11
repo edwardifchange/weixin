@@ -78,7 +78,7 @@ class wechatCallbackapiTest
                     if($keyword == '1'){
                         $contentStr = "白蘑菇你好";
                     }else{
-                        $contentStr = "白蘑菇你好!!!";
+                        $contentStr = "儿子们，我是你们高爸爸！！！";
                     }
                     break;
                 default;
