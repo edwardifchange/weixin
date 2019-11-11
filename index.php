@@ -76,8 +76,9 @@ class wechatCallbackapiTest
 //                    $windobj = $apiobj->results->result[0]->wind;//读取风力
 //                    $temobj = $apiobj->results->result[0]->temperature;//读取温度
 //                    $contentStr = "白蘑菇你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
+        
                     if(preg_match("/^1[34578]{1}\d{9}$/",$keyword)){
-                        $res = file_get_contents('http://mobsec-dianhua.baidu.com/dianhua_api/open/location?tel='.$keyword);
+                        $res = json_decode(file_get_contents('http://mobsec-dianhua.baidu.com/dianhua_api/open/location?tel=' . $keyword), true);
                         if(isset($res['responseHeader']['status']) && $res['responseHeader']['status'] == '200'){
                             $contentStr = $res['response'][$keyword]['location'];
                         }
