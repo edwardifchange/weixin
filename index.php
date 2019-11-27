@@ -45,7 +45,7 @@ class wechatCallbackapiTest
             switch ($type) {
                 case "event";
                     if ($customrevent == "subscribe") {
-                        $contentStr = "感谢你的关注\n你可以尝试着叫一声爸爸";
+                        $contentStr = "感谢你的关注！";
                     }
                     break;
                 case "image";
@@ -82,12 +82,16 @@ class wechatCallbackapiTest
                         if(isset($res['responseHeader']['status']) && $res['responseHeader']['status'] == '200'){
                             $contentStr = $res['response'][$keyword]['location'];
                         }
-                    }elseif($keyword == '老公'){
-                        $contentStr = "白蘑菇你好";
-                    }elseif($keyword == '爸爸'){
-                        $contentStr = "哎，乖儿子";
                     }else{
-                        $contentStr = "儿子们，我是你们高爸爸！！！";
+                        $weatherurl = "http://api.map.baidu.com/telematics/v2/weather?location={$keyword}&ak=1a3cde429f38434f1811a75e1a90310c";
+                       $apistr = file_get_contents($weatherurl);
+                       $apiobj = simplexml_load_string($apistr);
+                       $placeobj = $apiobj->currentCity;//读取城市
+                       $todayobj = $apiobj->results->result[0]->date;//读取星期
+                       $weatherobj = $apiobj->results->result[0]->weather;//读取天气
+                       $windobj = $apiobj->results->result[0]->wind;//读取风力
+                       $temobj = $apiobj->results->result[0]->temperature;//读取温度
+                       $contentStr = "婉婉你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
                     }
                     break;
                 default;
