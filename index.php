@@ -66,22 +66,23 @@ class wechatCallbackapiTest
                     $contentStr = "你的链接有病毒吧！";
                     break;
                 case "text";
-               
-//                    $weatherurl = "http://api.map.baidu.com/telematics/v2/weather?location={$keyword}&ak=1a3cde429f38434f1811a75e1a90310c";
-//                    $apistr = file_get_contents($weatherurl);
-//                    $apiobj = simplexml_load_string($apistr);
-//                    $placeobj = $apiobj->currentCity;//读取城市
-//                    $todayobj = $apiobj->results->result[0]->date;//读取星期
-//                    $weatherobj = $apiobj->results->result[0]->weather;//读取天气
-//                    $windobj = $apiobj->results->result[0]->wind;//读取风力
-//                    $temobj = $apiobj->results->result[0]->temperature;//读取温度
-//                    $contentStr = "白蘑菇你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
+
         
                     if(preg_match("/^1[34578]{1}\d{9}$/",$keyword)){
                         $res = json_decode(file_get_contents('http://mobsec-dianhua.baidu.com/dianhua_api/open/location?tel=' . $keyword), true);
                         if(isset($res['responseHeader']['status']) && $res['responseHeader']['status'] == '200'){
                             $contentStr = $res['response'][$keyword]['location'];
                         }
+                    }elseif(strstr($keyword, '笑话')){
+                        $time = 1418745237;
+                        $rangPage = rand(1, 20);
+                        $url = 'http://v.juhe.cn/joke/content/list.php?key=ded3491809b5c8474d670f5832b9f21e&page=1&pagesize=10&sort=asc&time='.$time;
+                        
+                        $apiData = json_decode(file_get_contents($url), true);
+                        $rand = rand(0, 9);
+                        $data = $apiData['result']['data'][$rand];
+                        $res = $data['content'];
+                        $contentStr = '婉婉小仙女，我来给你讲个笑话吧!'.$res;
                     }else{
                         $weatherurl = "http://api.map.baidu.com/telematics/v2/weather?location={$keyword}&ak=1a3cde429f38434f1811a75e1a90310c";
                        $apistr = file_get_contents($weatherurl);
@@ -91,7 +92,7 @@ class wechatCallbackapiTest
                        $weatherobj = $apiobj->results->result[0]->weather;//读取天气
                        $windobj = $apiobj->results->result[0]->wind;//读取风力
                        $temobj = $apiobj->results->result[0]->temperature;//读取温度
-                       $contentStr = "婉婉你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
+                       $contentStr = "你好！{$placeobj}{$todayobj}天气{$weatherobj}，风力{$windobj}，温度{$temobj}";
                     }
                     break;
                 default;
