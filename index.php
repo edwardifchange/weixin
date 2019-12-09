@@ -82,7 +82,7 @@ class wechatCallbackapiTest
                         $rand = rand(0, 9);
                         $data = $apiData['result']['data'][$rand];
                         $res = $data['content'];
-                        $contentStr = '婉婉小仙女，我来给你讲个笑话吧!'.$res;
+                        $contentStr = $res;
                     }else{
                         $weatherurl = "http://api.map.baidu.com/telematics/v2/weather?location={$keyword}&ak=1a3cde429f38434f1811a75e1a90310c";
                        $apistr = file_get_contents($weatherurl);
